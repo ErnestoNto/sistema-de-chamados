@@ -18,6 +18,7 @@ const Header = () => {
             alt="Foto de perfil"
             width={90}
             height={90}
+            
           />
         )}
       </div>

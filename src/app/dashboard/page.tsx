@@ -96,7 +96,17 @@ const Dashboard = () => {
           <FiPhone size={25} />
         </Title>
 
-        <S.ContainerNew>
+        {tasks.length === 0 ? (
+          <>
+            Nenhum chamado encontrado 
+
+            <S.ContainerNew>
+          <Link href='/new'>Novo chamado</Link>
+        </S.ContainerNew>
+          </>
+        ) : (
+          <>
+            <S.ContainerNew>
           <Link href='/new'>Novo chamado</Link>
         </S.ContainerNew>
 
@@ -136,6 +146,8 @@ const Dashboard = () => {
             )}
           </tbody>
         </S.Table>
+          </>
+        )}
 
         {isModalOpen && <Modal content={content} handleClose={() => setIsModalOpen(!isModalOpen)} />}
       </Content>

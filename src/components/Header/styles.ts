@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import cover from '../../assets/cover.png'
 
 export const Container = styled.header`
   height: 100vh;
@@ -12,8 +13,10 @@ export const Container = styled.header`
   div {
     width: 100%;
     height: 100px;
-    background: url("../../assets/cover.png");
-    background-color: #3918a9;
+    background-image: url('../../assets/cover.png');
+    background-color: #6622cc;
+    background-size: cover;
+    background-position: center;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -40,9 +43,10 @@ export const Container = styled.header`
       padding: 8px;
       border-bottom: 2px solid transparent;
       text-decoration: none;
+      transition: all ease-in-out .3s;
 
       &:hover {
-        border-bottom-color: #fafafa;
+        background-color: #3918a9;
       }
     }
   }

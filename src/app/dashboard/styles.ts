@@ -101,7 +101,7 @@ export const ContainerNew = styled.section`
         font-size: 1.5rem;
 
         &:hover{
-            opacity: .8;
+            transform: scale(1.1);
         }
     }
 `

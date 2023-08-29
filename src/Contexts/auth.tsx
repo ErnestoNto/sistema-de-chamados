@@ -44,7 +44,6 @@ const AuthProvider = ({children}: {children: React.ReactNode}) => {
             const data = JSON.parse(localStorage.getItem('users')!)
 
             setUser(data)
-            console.log(data)
             setLoadingUser(false)
         }
 
