@@ -8,7 +8,7 @@ import * as S from './styles'
 
 import {FiPhone, FiSearch, FiEdit, FiEdit2} from 'react-icons/fi'
 import Link from 'next/link'
-import { collection, getDocs, limit, orderBy, query } from 'firebase/firestore'
+import { collection, getDocs, limit, orderBy, query, where } from 'firebase/firestore'
 import { db } from '@/service/firebaseConection'
 import { format } from 'date-fns'
 import Modal from '@/components/Modal'
@@ -45,6 +45,7 @@ const collectionRef = collection(db, 'task')
 
 const Dashboard = () => {
   const {user} = useAuth()
+  const uid = user && user.uid
 
   const [tasks, setTasks] = React.useState<TaskProps[] | []>([]) 
   const [loading, setLoading] = React.useState(false) 
@@ -57,7 +58,7 @@ const Dashboard = () => {
     const getTasks = async () => {
       setLoading(true)
 
-      const q = query(collectionRef, orderBy('created', 'desc'), limit(5))
+      const q = query(collectionRef, orderBy('created', 'desc'), limit(5), where('userUid', '==', uid))
 
       await getDocs(q)
       .then((res) => {

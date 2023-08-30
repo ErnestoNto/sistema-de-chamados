@@ -38,6 +38,22 @@ export const Container = styled.main`
             object-fit: cover;
         }
     }
+    .newClientContainer{
+        padding: 10px 0;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .newClientLink{
+        padding: 10px 20px;
+        background-color: #6622CC;
+        color: #fafafa;
+        text-decoration: none;
+        font-size: 1.2rem;
+    }
 `
 
 export const Form = styled.form`

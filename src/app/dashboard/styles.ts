@@ -26,6 +26,7 @@ export const Table = styled.table`
 
     .controls{
         display: flex;
+        justify-content: center;
         gap: 4px;
 
         button{

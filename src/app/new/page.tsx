@@ -7,8 +7,9 @@ import {FiEdit2} from 'react-icons/fi'
 import * as S from '../settings/styles'
 
 import { useAuth } from '@/Contexts/auth'
-import { addDoc, collection, getDocs, setDoc } from 'firebase/firestore'
+import { addDoc, collection, getDocs, query, setDoc, where } from 'firebase/firestore'
 import { db } from '@/service/firebaseConection'
+import Link from 'next/link'
 
 type CostumersProps = {
   name: any,
@@ -31,7 +32,8 @@ const New = () => {
 
   React.useEffect(() => {
     const loadCostumers = async () => {
-      await getDocs(collectionRef)
+      const q = query(collectionRef, where('userUid', '==', uid))
+      await getDocs(q)
       .then((res) => {
         let lista = [] satisfies CostumersProps | []
 
@@ -83,6 +85,7 @@ const New = () => {
     })
   } 
 
+
   return (
     <>
       <Header />
@@ -93,7 +96,15 @@ const New = () => {
         </Title>
 
         <S.Container>
-          <S.Form onSubmit={handleSubmit}>
+          {costumers.length === 0 ? (
+            <section className='newClientContainer'>
+              <h2>Você não cadastrou nenhum client :(</h2>
+              <Link className='newClientLink' href='/customers'>
+                Cadastrar cliente
+              </Link>
+            </section>
+          ) : (
+            <S.Form onSubmit={handleSubmit}>
             <label>
               Nome da empressa
             </label>
@@ -160,6 +171,7 @@ const New = () => {
             <button type='submit'>Salvar</button>
 
           </S.Form>
+          )}
         </S.Container>
       </Content>
     </>

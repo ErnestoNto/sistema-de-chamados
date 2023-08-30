@@ -7,7 +7,7 @@ import {FiEdit2} from 'react-icons/fi'
 import * as S from '../../settings/styles'
 
 import { useAuth } from '@/Contexts/auth'
-import { addDoc, collection, doc, getDoc, getDocs, setDoc, updateDoc } from 'firebase/firestore'
+import { addDoc, collection, doc, getDoc, getDocs, query, setDoc, updateDoc, where } from 'firebase/firestore'
 import { db } from '@/service/firebaseConection'
 import {useRouter} from 'next/navigation'
 
@@ -35,7 +35,8 @@ const NewId = ({params}:  { params: { id: string } }) => {
 
   React.useEffect(() => {
     const loadCostumers = async () => {
-      await getDocs(collectionRef)
+      const q = query(collectionRef, where('userUid', '==', uid))
+      await getDocs(q)
       .then((res) => {
         let lista = [] satisfies CostumersProps | []
 
@@ -117,7 +118,9 @@ const NewId = ({params}:  { params: { id: string } }) => {
               Nome da empressa
             </label>
             {loadingCostumers ? (
-              <input type='text' value='Carregando nome das empresas' />
+              <select>
+                <option disabled >Carregando nome das empresas</option>
+              </select>
             ) : (
               <select 
                 value={costumerSelected}
