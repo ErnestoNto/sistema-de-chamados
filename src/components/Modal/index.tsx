@@ -6,7 +6,7 @@ import { TaskProps } from '@/app/dashboard/page'
 
 type ModalProps = {
     handleClose: () => void
-    content: TaskProps
+    content: TaskProps | null
 }
 
 const Modal = ({handleClose, content}: ModalProps) => {
@@ -22,30 +22,30 @@ const Modal = ({handleClose, content}: ModalProps) => {
 
             <div className='row'>
                 <p>
-                    Cliente: <span>{content.name}</span>
+                    Cliente: <span>{content!.name}</span>
                 </p>
             </div>
             <div className='row'>
                 <p>
-                    Assunto: <span>{content.type}</span>
+                    Assunto: <span>{content!.type}</span>
                 </p>
             </div>
             <div className='row'>
                 <p>
-                    Cadastrado em: <span>{content.createdFormat}</span>
+                    Cadastrado em: <span>{content!.createdFormat}</span>
                 </p>
             </div>
             <div className='row'>
                 <p>
-                    Status: <span>{content.status}</span>
+                    Status: <span>{content!.status}</span>
                 </p>
             </div>
 
-            {content.complement !== '' && (
+            {content!.complement !== '' && (
                 <>
                     <h3>Complemento</h3>
                     <p>
-                        {content.complement}
+                        {content!.complement}
                     </p>
                 </>
             )}

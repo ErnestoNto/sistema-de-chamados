@@ -25,25 +25,6 @@ export type TaskProps = {
 
 const collectionRef = collection(db, 'task')
 
-// complement
-// : 
-// {stringValue: 'Comer a CEO da empresa'}
-// costumer
-// : 
-// {stringValue: 'SantosFarm'}
-// created
-// : 
-// {timestampValue: '2023-08-28T21:56:56.082Z'}
-// status
-// : 
-// {stringValue: 'Aberto'}
-// subject
-// : 
-// {stringValue: 'Assitencia Tecnica'}
-// userUid
-// : 
-// {stringValue: 'S3aly1MFggN7Dp7W2vGIssHsbiF2'}
-
 const Dashboard = () => {
   const {user} = useAuth()
   const uid = user && user.uid
@@ -52,7 +33,7 @@ const Dashboard = () => {
   const [loading, setLoading] = React.useState(false) 
 
   const [isModalOpen, setIsModalOpen] = React.useState(false) 
-  const [content, setContent] = React.useState({}) 
+  const [content, setContent] = React.useState<TaskProps | null>(null) 
 
 
   React.useEffect(() => {
@@ -63,7 +44,7 @@ const Dashboard = () => {
 
       await getDocs(q)
       .then((res) => {
-        let data: TaskProps[] | [] = []
+        let data: TaskProps[] = []
 
         res.forEach(item => (
           //@ts-ignore
@@ -84,7 +65,7 @@ const Dashboard = () => {
     }
 
     getTasks()
-  }, [])
+  }, [uid])
 
   const handleOpenModal = (data: TaskProps) => {
     setIsModalOpen(!isModalOpen)
