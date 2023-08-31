@@ -41,11 +41,12 @@ const NewId = ({params}:  { params: { id: string } }) => {
         let lista = [] satisfies CostumersProps | []
 
         res.forEach(item => {
-          const itemToAdd: CostumersProps = {
+          const itemToAdd = {
             name: item.data().name,
             id: item.id
-          }
-
+          } satisfies CostumersProps
+  
+          //@ts-ignore
           lista.push(itemToAdd)
 
         })
@@ -56,7 +57,7 @@ const NewId = ({params}:  { params: { id: string } }) => {
     }
 
     loadCostumers()
-  }, [])
+  }, [uid])
 
   async function loadId(lista: CostumersProps[]) {
     const docRef = doc(db, 'task', paramsId)
@@ -74,7 +75,7 @@ const NewId = ({params}:  { params: { id: string } }) => {
     })
   }
 
-
+  //@ts-ignore
   const handleChangeStatus = (e) => {
     setStatus(e.target.value)
   }

@@ -20,6 +20,7 @@ export type TaskProps = {
   status: string
   type: string
   complement: string
+  id: string
 }
 
 const collectionRef = collection(db, 'task')
@@ -62,9 +63,10 @@ const Dashboard = () => {
 
       await getDocs(q)
       .then((res) => {
-        let data = []
+        let data: TaskProps[] | [] = []
 
         res.forEach(item => (
+          //@ts-ignore
           data.push({
             created: item.data().created,
             createdFormat: format(item.data().created.toDate(), 'dd/MM/yyyy'),
