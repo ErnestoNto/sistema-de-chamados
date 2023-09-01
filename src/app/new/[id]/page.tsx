@@ -33,6 +33,22 @@ const NewId = ({params}:  { params: { id: string } }) => {
   const [status, setStatus] = React.useState('Aberto')
   const [subject, setSubject] = React.useState('Suporte')
 
+  const loadId = React.useCallback(async function(lista: CostumersProps[]) {
+    const docRef = doc(db, 'task', paramsId)
+    
+    await getDoc(docRef)
+    .then(snapshot => {
+        setStatus(snapshot.data()!.status)
+        setComplement(snapshot.data()!.complement)
+        setSubject(snapshot.data()!.subject)
+
+        const index = lista.findIndex(item => item.id === snapshot.data()!.clientId)
+        console.log(index);
+        
+        setCostumerSelected(index)
+    })
+  }, [paramsId])
+
   React.useEffect(() => {
     const loadCostumers = async () => {
       const q = query(collectionRef, where('userUid', '==', uid))
@@ -57,23 +73,9 @@ const NewId = ({params}:  { params: { id: string } }) => {
     }
 
     loadCostumers()
-  }, [uid])
+  }, [uid, loadId])
 
-  async function loadId(lista: CostumersProps[]) {
-    const docRef = doc(db, 'task', paramsId)
-    
-    await getDoc(docRef)
-    .then(snapshot => {
-        setStatus(snapshot.data()!.status)
-        setComplement(snapshot.data()!.complement)
-        setSubject(snapshot.data()!.subject)
-
-        const index = lista.findIndex(item => item.id === snapshot.data()!.clientId)
-        console.log(index);
-        
-        setCostumerSelected(index)
-    })
-  }
+  
 
   //@ts-ignore
   const handleChangeStatus = (e) => {
