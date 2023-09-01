@@ -22,7 +22,7 @@ const New = () => {
   const { user } = useAuth()
   const uid = user && user.uid
 
-  const [costumers, setCostumers] = React.useState<CostumersProps[] | []>([])
+  const [costumers, setCostumers] = React.useState<CostumersProps[] | null>(null)
   const [loadingCostumers, setLoadingCostumers] = React.useState(true)
 
   const [costumerSelected, setCostumerSelected] = React.useState(0)
@@ -35,11 +35,11 @@ const New = () => {
       const q = query(collectionRef, where('userUid', '==', uid))
       await getDocs(q)
       .then((res) => {
-        let lista = [] satisfies CostumersProps | []
+        let lista = [] satisfies CostumersProps[] | []
 
         res.forEach(item => {
-
-          return lista.push({
+          //@ts-ignore
+          lista.push({
             name: item.data().name,
             id: item.id
           })
@@ -54,26 +54,26 @@ const New = () => {
   }, [uid])
 
 
-  const handleChangeStatus = (e) => {
+  const handleChangeStatus = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStatus(e.target.value)
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    costumer: costumers[costumerSelected].name, 
+    costumer: costumers![costumerSelected].name, 
       subject,
       status,
       complement
     
     const taskRef = collection(db, 'task')
     await addDoc(taskRef, {
-      costumer: costumers[costumerSelected].name, 
+      costumer: costumers![costumerSelected].name, 
       subject,
       status,
       complement,
       created: new Date(),
-      clientId: costumers[costumerSelected].id,
+      clientId: costumers![costumerSelected].id,
       userUid: uid
     })
     .then(() => {
@@ -95,8 +95,8 @@ const New = () => {
           <FiEdit2 size={25}/>
         </Title>
 
-        <S.Container>
-          {costumers.length === 0 ? (
+        <S.Container> 
+          {costumers && costumers!.length === 0 ? (
             <section className='newClientContainer'>
               <h2>Você não cadastrou nenhum client :(</h2>
               <Link className='newClientLink' href='/customers'>
@@ -115,7 +115,7 @@ const New = () => {
                 value={costumerSelected}
                 onChange={(e) => setCostumerSelected(Number(e.target.value))}
               >
-              {costumers.map((item, index) => (
+              {costumers!.map((item, index) => (
                 <option key={index} value={index}>
                   {item.name}
                 </option>
@@ -141,7 +141,7 @@ const New = () => {
                 name='radio' 
                 checked={status === 'Aberto'}
                 value='Aberto'
-                onClick={handleChangeStatus}
+                onChange={handleChangeStatus}
               />
 
               <label>Em andamento</label>
@@ -150,7 +150,7 @@ const New = () => {
                 name='radio' 
                 checked={status === 'Em andamento'}
                 value='Em andamento'
-                onClick={handleChangeStatus}
+                onChange={handleChangeStatus}
               />
               <label>Concluido</label>
               <input 
@@ -158,7 +158,7 @@ const New = () => {
                 name='radio' 
                 checked={status === 'Concluido'}
                 value='Concluido'
-                onClick={handleChangeStatus}
+                onChange={handleChangeStatus}
               />            </div>
 
             <label>Complemento</label>
