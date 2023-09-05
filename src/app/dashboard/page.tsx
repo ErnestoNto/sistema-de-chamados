@@ -25,10 +25,10 @@ export type TaskProps = {
 
 const collectionRef = collection(db, 'task')
 
-const Dashboard = () => {
+const Dashboard = () => { 
   const auth = useAuth()
   
-  const uid = auth && auth.user.uid
+  const uid = auth && auth.user?.uid
 
   const [tasks, setTasks] = React.useState<TaskProps[] | []>([]) 
   const [loading, setLoading] = React.useState(false) 
@@ -48,7 +48,6 @@ const Dashboard = () => {
         let data: TaskProps[] = []
 
         res.forEach(item => (
-          //@ts-ignore
           data.push({
             created: item.data().created,
             createdFormat: format(item.data().created.toDate(), 'dd/MM/yyyy'),
@@ -61,7 +60,7 @@ const Dashboard = () => {
         ))
         
         setTasks(data)
-      setLoading(false)
+        setLoading(false)
       })
     }
 
