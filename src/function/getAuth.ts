@@ -1,5 +1,5 @@
 export const getAuth = () => {
-    const user = JSON.parse(localStorage.getItem('users')!)
+    const user = localStorage.getItem('users')
 
-    return !!user
+        return !!user
 }

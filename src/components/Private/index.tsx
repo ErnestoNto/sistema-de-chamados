@@ -1,3 +1,5 @@
+'use client'
+import AuthProvider from '@/Contexts/auth'
 import { public_routes } from '@/constants/public'
 import { getAuth } from '@/function/getAuth'
 import { useRouter } from 'next/navigation'
@@ -9,19 +11,19 @@ const Private = ({children}: {children: React.ReactNode}) => {
 
     const {push} = useRouter()
 
-    if(!isSigned){
+    React.useEffect(() => {
+      if(!isSigned){
         push(public_routes.public.login)
-
-        return(
-            <>
-                <div></div>
-            </>
-        )
     }
+    }, [isSigned, push])
 
   return (
     <>
+    {!isSigned && null}
+
+    <AuthProvider>
      {children} 
+    </AuthProvider>
     </>
   )
 }
