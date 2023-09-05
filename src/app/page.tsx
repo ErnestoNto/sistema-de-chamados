@@ -28,12 +28,10 @@ export default function Home() {
     mode: 'onBlur'
   })
 
-  const {loading, signIn} = useAuth()
+  const auth = useAuth()
 
-  const handleLogin = (data: ZodProps) => {
-    alert('Bungas')
-  }
-
+  const loading = auth && auth.loading  
+  const signIn = auth && auth.signIn  
 
   return (
     <>
@@ -42,7 +40,7 @@ export default function Home() {
           <div>
             <Image src={logoBat} alt="Logo" />
           </div>
-          <S.Form onSubmit={handleSubmit(signIn)}>
+          <S.Form onSubmit={handleSubmit(signIn!)}>
             <h2>Entrar</h2>
             <input 
               type="email" 

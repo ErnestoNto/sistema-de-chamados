@@ -19,8 +19,9 @@ type CostumersProps = {
 const collectionRef = collection(db, 'costumers') 
 
 const NewId = ({params}:  { params: { id: string } }) => {
-  const { user } = useAuth()
-  const uid = user && user.uid
+  const auth = useAuth()
+
+  const uid = auth && auth.user.uid  
 
   const paramsId = params.id
   const {push} = useRouter()

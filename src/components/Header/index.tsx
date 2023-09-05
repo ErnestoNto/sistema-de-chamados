@@ -7,7 +7,10 @@ import avatar from "../../assets/avatar.png";
 import Link from "next/link";
 
 const Header = () => {
-  const { user, loadingUser } = useAuth();
+  const auth = useAuth()
+
+  const user = auth && auth.user 
+  const loadingUser = auth && auth.loadingUser 
 
   return (
     <S.Container>

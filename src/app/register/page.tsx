@@ -27,7 +27,10 @@ export default function Home() {
     mode: "onBlur",
   });
 
-  const {loading, signUp} = useAuth()
+  const auth = useAuth()
+
+  const loading = auth && auth.loading  
+  const signUp = auth && auth.signUp  
 
   const handleRegister = (data: ZodProps) => {
     alert('Fafas');
@@ -40,7 +43,7 @@ export default function Home() {
           <div>
             <Image src={logoBat} alt="Logo" />
           </div>
-          <S.Form onSubmit={handleSubmit(signUp)}>
+          <S.Form onSubmit={handleSubmit(signUp!)}>
             <h2>Cadastrar</h2>
             <input
               type="text"

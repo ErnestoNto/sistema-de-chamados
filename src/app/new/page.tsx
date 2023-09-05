@@ -19,8 +19,9 @@ type CostumersProps = {
 const collectionRef = collection(db, 'costumers') 
 
 const New = () => {
-  const { user } = useAuth()
-  const uid = user && user.uid
+  const auth = useAuth()
+
+  const uid = auth && auth.user.uid  
 
   const [costumers, setCostumers] = React.useState<CostumersProps[] | null>(null)
   const [loadingCostumers, setLoadingCostumers] = React.useState(true)

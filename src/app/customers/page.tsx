@@ -16,7 +16,9 @@ const Customers = () => {
 
   const [loading, setLoading] = React.useState(false)
 
-  const { user } = useAuth()
+  const auth = useAuth()
+
+  const user = auth && auth.user
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

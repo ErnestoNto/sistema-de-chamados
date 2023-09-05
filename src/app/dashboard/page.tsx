@@ -26,8 +26,9 @@ export type TaskProps = {
 const collectionRef = collection(db, 'task')
 
 const Dashboard = () => {
-  const {user} = useAuth()
-  const uid = user && user.uid
+  const auth = useAuth()
+  
+  const uid = auth && auth.user.uid
 
   const [tasks, setTasks] = React.useState<TaskProps[] | []>([]) 
   const [loading, setLoading] = React.useState(false) 

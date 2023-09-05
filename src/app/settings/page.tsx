@@ -15,7 +15,14 @@ import { db, storage } from "../../service/firebaseConection";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const Settings = () => {
-  const { user, loadingUser, logout, storageUser, updateUser } = useAuth();
+
+  const auth = useAuth()
+
+  const user = auth && auth.user  
+  const loadingUser = auth && auth.loadingUser  
+  const logout = auth && auth.logout  
+  const storageUser = auth && auth.storageUser  
+  const updateUser = auth && auth.updateUser  
 
   const [avatarUrl, setAvatarUrl] = React.useState<null | string>(user && user.avatarUrl)
   const [avatarImg, setAvatarImg] = React.useState<File | null>(null)
@@ -54,8 +61,8 @@ const Settings = () => {
             avatarUrl: dowloadUrl,
           };
 
-          storageUser(data);
-          updateUser(data);
+          storageUser!(data);
+          updateUser!(data);
           alert("Atualizado com sucesso :3");
         });
       });
@@ -81,8 +88,8 @@ const Settings = () => {
           uid: user.uid,
         };
 
-        storageUser(data);
-        updateUser(data);
+        storageUser!(data);
+        updateUser!(data);
         alert("Atualizado com sucesso :3");
       })
     } else if (name !== "" && avatarUrl !== null) {
@@ -146,7 +153,7 @@ const Settings = () => {
         </S.Container>
       </Content>
       <Content>
-        <S.LogoutButton onClick={logout}>Sair</S.LogoutButton>
+        <S.LogoutButton onClick={logout!}>Sair</S.LogoutButton>
       </Content>
     </>
   );
