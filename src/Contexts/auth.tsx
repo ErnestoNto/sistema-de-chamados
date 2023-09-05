@@ -12,7 +12,7 @@ type FormProps = {
 }
 
 export type ContextProps = {
-    user: UserProps
+    user: any
     loading: boolean
     loadingUser: boolean
     signIn: ({email, password}: FormProps) => void
@@ -41,10 +41,13 @@ const AuthProvider = ({children}: {children: React.ReactNode}) => {
     React.useEffect(() => {
         const loadUser = () => {
             
-            const data = JSON.parse(localStorage.getItem('users')!)
+            const data = localStorage.getItem('users')
 
-            setUser(data)
-            setLoadingUser(false)
+            if(data){
+                setUser(JSON.parse(data))
+                setLoadingUser(false)
+            }
+
         }
 
         loadUser()
@@ -60,12 +63,12 @@ const AuthProvider = ({children}: {children: React.ReactNode}) => {
             const docRef = doc(db, 'users', uid)
             await getDoc(docRef)
             .then((doc) => {
-                let data = {
+                let data: UserProps = {
                     name: doc.data()!.name,
                     email: res.user.email!,
                     uid,
                     avatarUrl: doc.data()!.avatarUrl
-                } satisfies UserProps
+                }
 
                 setUser(data)
                 storageUser(data)
@@ -88,12 +91,12 @@ const AuthProvider = ({children}: {children: React.ReactNode}) => {
                 avatarUrl: null
             })
             .then(() => {
-                let data = {
+                let data: UserProps = {
                     name: name!,
                     email: res.user.email!,
                     uid,
                     avatarUrl: null
-                } satisfies UserProps
+                }
 
                 setUser(data)
                 storageUser(data)
