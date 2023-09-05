@@ -21,7 +21,7 @@ const collectionRef = collection(db, 'costumers')
 const NewId = ({params}:  { params: { id: string } }) => {
   const auth = useAuth()
 
-  const uid = auth && auth.user.uid  
+  const uid = auth && auth.user?.uid  
 
   const paramsId = params.id
   const {push} = useRouter()
