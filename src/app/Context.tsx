@@ -15,7 +15,7 @@ const Context = ({children}: {children: React.ReactNode}) => {
 
   return (
     <AuthProvider>
-      {isPublic ? (
+      {/* {isPublic ? (
         <>
           {children}
         </>
@@ -23,7 +23,9 @@ const Context = ({children}: {children: React.ReactNode}) => {
         <Private>
           {children}
         </Private>
-      )}
+      )} */}
+
+      {children}
     </AuthProvider>
   )
 }

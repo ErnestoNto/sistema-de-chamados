@@ -29,7 +29,7 @@ export type UserProps = {
     avatarUrl: any
 }
 
-const AuthContext = React.createContext<ContextProps | {}>({})
+const AuthContext = React.createContext<ContextProps | null>(null)
 
 const AuthProvider = ({children}: {children: React.ReactNode}) => {
     const [ user, setUser ] = React.useState<UserProps | null>(null)
@@ -141,7 +141,7 @@ const AuthProvider = ({children}: {children: React.ReactNode}) => {
 export default AuthProvider
 
 export const useAuth = () => {
-    const data = React.useContext(AuthContext) as ContextProps
+    const data: ContextProps | null = React.useContext(AuthContext)  
 
     return data
 }
